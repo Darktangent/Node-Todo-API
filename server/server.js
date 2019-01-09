@@ -1,6 +1,4 @@
-require('./config/config.js')
-
-
+require('./config/config.js');
 let {mongoose}=require("./db/mongoose");
 let {ObjectID}=require("mongodb");
 let {Todo}=require("./models/todo");
@@ -82,7 +80,17 @@ app.patch("/todos/:id",(req,res)=>{
     }).catch((e)=>{res.status(400).send()})
 })
 
-
+//post users
+app.post('/users', (req, res) => {
+    var body = _.pick(req.body, ['email', 'password']);
+    var user = new User(body);
+  
+    user.save().then((user) => {
+      res.send(user);
+    }).catch((e) => {
+      res.status(400).send(e);
+    })
+  });
 
 
 
