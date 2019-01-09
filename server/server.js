@@ -7,6 +7,7 @@ let express= require("express");
 // const {SHA256}=require("crypto-js");
 let bodyParser=require("body-parser");
 const jwt=require("jsonwebtoken")
+let {authenticate}=require('./middleware/authenticate')
 //jwt.sign jwt.verify
 
 const _=require('lodash');
@@ -99,7 +100,21 @@ app.post('/users', (req, res) => {
     })
   });
 
+  
 
+app.get("/users/me",authenticate,(req,res)=>{
+    // let token=req.header('x-auth');
+    // User.findByToken(token).then((user)=>{
+    //     if(!user){
+    //         return Promise.reject();
+    //     }
+    //     res.send(user);
+    // }).catch((e)=>{
+    //     res.status(401).send()
+    // })
+
+    res.send(req.user)
+})
 
 
 app.listen(port,()=>{
