@@ -4,11 +4,15 @@ let {ObjectID}=require("mongodb");
 let {Todo}=require("./models/todo");
 let {User}=require("./models/user");
 let express= require("express");
+// const {SHA256}=require("crypto-js");
 let bodyParser=require("body-parser");
-const _=require('lodash')
+const jwt=require("jsonwebtoken")
+//jwt.sign jwt.verify
+
+const _=require('lodash');
 const port=process.env.PORT || 3000;
 let app=express();
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 app.post("/todos",(req,res)=>{
     let todo=new Todo({
         text:req.body.text
@@ -86,7 +90,10 @@ app.post('/users', (req, res) => {
     var user = new User(body);
   
     user.save().then((user) => {
-      res.send(user);
+    //   res.send(user);
+   return user.generateAuthToken()
+    }).then((token)=>{
+        res.header('x-auth',token).send(user)
     }).catch((e) => {
       res.status(400).send(e);
     })
