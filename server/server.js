@@ -8,6 +8,7 @@ let express= require("express");
 let bodyParser=require("body-parser");
 const jwt=require("jsonwebtoken")
 let {authenticate}=require('./middleware/authenticate')
+const bcrypt = require("bcryptjs");
 //jwt.sign jwt.verify
 
 const _=require('lodash');
